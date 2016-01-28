@@ -21,6 +21,9 @@
 		E763B2C81C593BB000738A16 /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E763B2C71C593BB000738A16 /* CommentCell.swift */; };
 		E763B2CC1C593D0700738A16 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E763B2CB1C593D0700738A16 /* User.swift */; };
 		E763B2CE1C593F2C00738A16 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = E763B2CD1C593F2C00738A16 /* Comment.swift */; };
+		E79CBB621C5A769300128746 /* NewCommentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79CBB611C5A769300128746 /* NewCommentController.swift */; };
+		E79CBB651C5A935400128746 /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79CBB631C5A935400128746 /* ActionButton.swift */; };
+		E79CBB661C5A935400128746 /* ActionButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79CBB641C5A935400128746 /* ActionButtonItem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,7 +42,10 @@
 		E763B2C51C58D90F00738A16 /* CardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardViewController.swift; sourceTree = "<group>"; };
 		E763B2C71C593BB000738A16 /* CommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
 		E763B2CB1C593D0700738A16 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = ../User.swift; sourceTree = "<group>"; };
-		E763B2CD1C593F2C00738A16 /* Comment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
+		E763B2CD1C593F2C00738A16 /* Comment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Comment.swift; path = ../Comment.swift; sourceTree = "<group>"; };
+		E79CBB611C5A769300128746 /* NewCommentController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewCommentController.swift; sourceTree = "<group>"; };
+		E79CBB631C5A935400128746 /* ActionButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionButton.swift; sourceTree = "<group>"; };
+		E79CBB641C5A935400128746 /* ActionButtonItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionButtonItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,7 +62,6 @@
 		E763B2901C57B83400738A16 = {
 			isa = PBXGroup;
 			children = (
-				E763B2CD1C593F2C00738A16 /* Comment.swift */,
 				E763B29B1C57B83400738A16 /* LessonsKukorin2016 */,
 				E763B29A1C57B83400738A16 /* Products */,
 			);
@@ -73,22 +78,58 @@
 		E763B29B1C57B83400738A16 /* LessonsKukorin2016 */ = {
 			isa = PBXGroup;
 			children = (
+				E79CBB671C5A93EB00128746 /* New Comment Screen */,
 				E763B2AE1C57DCEF00738A16 /* MainView.swift */,
 				E763B29C1C57B83400738A16 /* AppDelegate.swift */,
 				E763B2A01C57B83400738A16 /* Main.storyboard */,
 				E763B2B01C57DD7600738A16 /* PhotoCard.storyboard */,
-				E763B2C71C593BB000738A16 /* CommentCell.swift */,
-				E763B2C51C58D90F00738A16 /* CardViewController.swift */,
-				E763B2C31C58D59600738A16 /* CardHeaderView.swift */,
-				E763B2BD1C57EA2100738A16 /* PhotoCardTimeLineViewController.swift */,
-				E763B2C11C57F02B00738A16 /* CardCell.swift */,
-				E763B2BF1C57ED6700738A16 /* Card.swift */,
-				E763B2CB1C593D0700738A16 /* User.swift */,
+				E79CBB601C5A56A700128746 /* Timeline Screen */,
+				E79CBB5F1C5A566B00128746 /* Card Screen */,
+				E79CBB5E1C5A562E00128746 /* Model */,
 				E763B2A31C57B83400738A16 /* Assets.xcassets */,
 				E763B2A51C57B83400738A16 /* LaunchScreen.storyboard */,
 				E763B2A81C57B83400738A16 /* Info.plist */,
 			);
 			path = LessonsKukorin2016;
+			sourceTree = "<group>";
+		};
+		E79CBB5E1C5A562E00128746 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				E763B2BF1C57ED6700738A16 /* Card.swift */,
+				E763B2CD1C593F2C00738A16 /* Comment.swift */,
+				E763B2CB1C593D0700738A16 /* User.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		E79CBB5F1C5A566B00128746 /* Card Screen */ = {
+			isa = PBXGroup;
+			children = (
+				E763B2C51C58D90F00738A16 /* CardViewController.swift */,
+				E763B2C71C593BB000738A16 /* CommentCell.swift */,
+				E763B2C31C58D59600738A16 /* CardHeaderView.swift */,
+			);
+			name = "Card Screen";
+			sourceTree = "<group>";
+		};
+		E79CBB601C5A56A700128746 /* Timeline Screen */ = {
+			isa = PBXGroup;
+			children = (
+				E763B2C11C57F02B00738A16 /* CardCell.swift */,
+				E763B2BD1C57EA2100738A16 /* PhotoCardTimeLineViewController.swift */,
+			);
+			name = "Timeline Screen";
+			sourceTree = "<group>";
+		};
+		E79CBB671C5A93EB00128746 /* New Comment Screen */ = {
+			isa = PBXGroup;
+			children = (
+				E79CBB631C5A935400128746 /* ActionButton.swift */,
+				E79CBB641C5A935400128746 /* ActionButtonItem.swift */,
+				E79CBB611C5A769300128746 /* NewCommentController.swift */,
+			);
+			name = "New Comment Screen";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -171,8 +212,11 @@
 				E763B2CE1C593F2C00738A16 /* Comment.swift in Sources */,
 				E763B2CC1C593D0700738A16 /* User.swift in Sources */,
 				E763B2C01C57ED6700738A16 /* Card.swift in Sources */,
+				E79CBB661C5A935400128746 /* ActionButtonItem.swift in Sources */,
 				E763B2C41C58D59600738A16 /* CardHeaderView.swift in Sources */,
+				E79CBB621C5A769300128746 /* NewCommentController.swift in Sources */,
 				E763B2C81C593BB000738A16 /* CommentCell.swift in Sources */,
+				E79CBB651C5A935400128746 /* ActionButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -322,6 +366,7 @@
 				E763B2AD1C57B83400738A16 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

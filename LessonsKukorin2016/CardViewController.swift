@@ -20,6 +20,8 @@ class CardViewController: UIViewController {
     
     private var comments = [Comment]()
     
+    private var newCommentButton: ActionButton!
+    
     
     func fetchComment() {
         comments = Comment.allComment
@@ -56,6 +58,8 @@ class CardViewController: UIViewController {
         
         fetchComment()
         
+        createNewCommentButton()
+        
     }
     
     override func prefersStatusBarHidden() -> Bool {
@@ -72,6 +76,8 @@ class CardViewController: UIViewController {
         
         headerView.frame = headerRect
         
+        headerView.card = card
+        
         let path = UIBezierPath()
         path.moveToPoint(CGPoint(x: 0, y: 0))
         path.addLineToPoint(CGPoint(x: headerRect.width, y: 0))
@@ -79,6 +85,15 @@ class CardViewController: UIViewController {
         path.addLineToPoint(CGPoint(x: 0, y: headerRect.height))
         
         headerMaskLayer?.path = path.CGPath
+        
+    }
+    
+    func createNewCommentButton() {
+        newCommentButton = ActionButton(attachedToView: self.view, items: [])
+        
+        newCommentButton.action = {button in
+            self.performSegueWithIdentifier("ShowComment", sender: nil)
+        }
         
     }
 }
