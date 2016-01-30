@@ -33,9 +33,9 @@ class CommentCell: UITableViewCell {
     }
     
     func updateUI() {
-        userProfileImageView.image = comment.user.profileImage
-        userNameLabel.text = comment.user.fullName
-        createdAtLabel.text = comment.createdAt
+//        userProfileImageView.image = comment.user.profileImage
+//        userNameLabel.text = comment.user.fullName
+//        createdAtLabel.text = comment.createdAt
         commentTextLabel.text = comment.commentText
         
         userProfileImageView.layer.cornerRadius = userProfileImageView.bounds.width / 2
@@ -45,17 +45,17 @@ class CommentCell: UITableViewCell {
     }
     
     @IBAction func likeButtonClicked(sender: UIButton) {
-        comment.userDidLike = !comment.userDidLike
-        
-        if comment.userDidLike {
-            comment.numberOfLikes++
-        } else {
-            comment.numberOfLikes--
-        }
+//        comment.userDidLike = !comment.userDidLike
+//        
+//        if comment.userDidLike {
+//            comment.numberOfLikes++
+//        } else {
+//            comment.numberOfLikes--
+//        }
         
         likeButton.setTitle("❤️ \(comment.numberOfLikes) likes", forState: UIControlState.Normal)
         
-        currentUserDidLike = comment.userDidLike
+    //    currentUserDidLike = comment.userDidLike
         
         changeLikeButtonColor()
         

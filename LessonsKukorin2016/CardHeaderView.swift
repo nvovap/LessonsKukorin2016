@@ -21,8 +21,8 @@ class CardHeaderView: UIView {
     }
     
     func updateUI() {
-        numberOfCommentsLabel.text = "\(card.numberOfComment) comments"
+        //numberOfCommentsLabel.text = "\(card.numberOfComment) comments"
         cardDescriptionLabel.text = card.description
-        backgroundImageView.image = card.cardImage
+        //backgroundImageView.image = card.cardImage
     }
 }

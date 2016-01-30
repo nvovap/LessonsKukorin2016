@@ -7,23 +7,45 @@
 //
 
 import UIKit
+import Parse
 
-class Card {
-    var title = ""
-    var description = ""
-    var numberOfComment = 0
-    var cardImage: UIImage!
+
+class Card : PFObject, PFSubclassing {
     
+    @NSManaged var title: String!
+    @NSManaged var cardDescription: String!
+    @NSManaged var numberOfComments: Int
+    @NSManaged var cardImage: PFFile
     
-    init(title: String, description: String, cardImage: UIImage!) {
-        self.title = title
-        self.description = description
-        self.cardImage = cardImage
-        self.numberOfComment = 1
+    override init() {
+        super.init()
     }
     
-    //dummy data
-    static func createCard() -> [Card]{
-        return [Card(title: "Ferrari 430 Hamann", description: "It's Car of dream", cardImage: UIImage(named: "Ferrari430Hamann")), Card(title: "Ford Shelby GT 350R", description: "It's butifull Car", cardImage: UIImage(named: "FordShelbyGT350R")), Card(title: "Infiniti FX35", description: "It's good Car", cardImage: UIImage(named: "InfinitiFX35"))]
+    init(title: String, cardDescription: String, cardImage: PFFile, numberOfComments: Int) {
+        super.init()
+        self.title = title
+        self.cardDescription = cardDescription
+        self.cardImage = cardImage
+        self.numberOfComments = numberOfComments
+    }
+    
+    func incrementNumberOfComments() {
+        numberOfComments += 1
+        self.saveInBackground()
+    }
+    
+    //MARK: - PFSubclassing
+    override class func initialize() {
+        struct Static {
+            static var onceToken: dispatch_once_t = 0
+        }
+        
+        dispatch_once(&Static.onceToken) {
+            self.registerSubclass()
+        }
+    }
+    
+    static func parseClassName() -> String {
+        return "Card"
     }
 }

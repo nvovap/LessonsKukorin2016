@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Parse
+
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,7 +17,57 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        
+        
+     //   Parse.enableLocalDatastore()
+        
+        //register PFSubclassing 
+        
+        
+        Card.initialize()
+        Comment.initialize()
+        User.initialize()
+        
+        // Initialize Parse.
+        Parse.setApplicationId("x9oLAsbfe4A6M1PvZ3lz4WkY0AyuXVJDQbxzbgTO",
+            clientKey: "XM4EP4IeZfG8m1aBEzk7mKctGarPdG8pruks3opJ")
+        
+        
+        // [Optional] Track statistics around application opens.
+        PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
+        
+     
+        
+       /* let card = PFObject(className: "Card")
+        card["title"] = "Ferrari"
+        card["Desc"] = "It's card my dream!!!"
+        
+        card.saveInBackgroundWithBlock { (success, error) -> Void in
+            if success == true {
+                print("Object has been saved.")
+            } else {
+                print("Object don't save.")
+            }
+        }*/
+        
+        
+//        let query = PFQuery(className:"Card")
+//        query.getObjectInBackgroundWithId("1YBOWJv7HA5") {
+//            (gameScore: PFObject?, error: NSError?) -> Void in
+//            if error != nil {
+//                print(error)
+//            } else if let gameScore = gameScore {
+//                print(gameScore)
+//            }
+//        }
+        
+        //try! card.save()
+        //card.saveInBackground()
+        //card.saveEventually() //this mezod save data don't internet connection
+        
+        
+        
         return true
     }
 

@@ -7,32 +7,62 @@
 //
 
 import UIKit
+import Parse
 
-class Comment {
-    var id: String
-    var user: User
-    var createdAt: String
-    var commentText: String
-    var numberOfLikes: Int = 0
+class Comment : PFObject, PFSubclassing {
     
-    let cardId: String
+    @NSManaged var user: PFUser
+    @NSManaged var commentText: String
+    @NSManaged var numberOfLikes: Int
+    @NSManaged var cardId: String
+    @NSManaged var likeUserIds: [String]!
     
-    var userDidLike = false
     
-    init(id: String, user: User, createdAt: String, commentText: String, numberOfLikes: Int, cardId: String, userDidLike: Bool) {
-        self.id = id
+    init( user: PFUser,  commentText: String, numberOfLikes: Int, cardId: String) {
+        super.init()
+        
         self.user = user
-        self.createdAt = createdAt
         self.commentText = commentText
         self.numberOfLikes = numberOfLikes
         self.cardId = cardId
-        self.userDidLike = userDidLike
+        self.likeUserIds = [String]()
     }
     
     
-    static let allComment = [
-        Comment(id: "id1", user: User.allUsers()[0], createdAt: "today", commentText: "Test", numberOfLikes: 12, cardId: "card1", userDidLike: false),
-        Comment(id: "id2", user: User.allUsers()[0], createdAt: "yesterday", commentText: "Test two", numberOfLikes: 2, cardId: "card2", userDidLike: true)
-    ]
+    //MARK: - Like / Dislike
+    func like() {
+        if let currentUserObjectId = User.currentUser()?.objectId {
+            if !likeUserIds.contains(currentUserObjectId) {
+                numberOfLikes += 1
+                likeUserIds.insert(currentUserObjectId, atIndex: 0)
+                self.saveInBackground()
+            }
+        }
+    }
+    
+    func disLike() {
+        if let currentUserObjectId = User.currentUser()?.objectId {
+            if let index = likeUserIds.indexOf(currentUserObjectId) {
+                numberOfLikes -= 1
+                likeUserIds.removeAtIndex(index)
+                self.saveInBackground()
+            }
+        }
+    }
+    
+    //MARK: - PFSubclassing
+    override class func initialize() {
+        struct Static {
+            static var onceToken: dispatch_once_t = 0
+        }
+        
+        dispatch_once(&Static.onceToken) {
+            self.registerSubclass()
+        }
+    }
+    
+    static func parseClassName() -> String {
+        return "Comment"
+    }
     
 }

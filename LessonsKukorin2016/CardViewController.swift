@@ -16,7 +16,7 @@ class CardViewController: UIViewController {
     private var tableHeaderHeight: CGFloat = 350.0
     private var headerMaskLayer: CAShapeLayer!
     
-    var card: Card = Card.createCard()[0]
+    var card: Card!
     
     private var comments = [Comment]()
     
@@ -24,7 +24,7 @@ class CardViewController: UIViewController {
     
     
     func fetchComment() {
-        comments = Comment.allComment
+        //comments = Comment.allComment
         tableView.reloadData()
     }
     

@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Parse
+import ParseUI
 
 class PhotoCardTimeLineViewController: UIViewController {
     
@@ -17,8 +19,17 @@ class PhotoCardTimeLineViewController: UIViewController {
     @IBOutlet weak var currentFullnameButton: UIButton!
     
     
-    private let cards = Card.createCard()
+    private let cards = [Card]()
 
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if PFUser.currentUser() == nil {
+            userLogIn()
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -30,10 +41,17 @@ class PhotoCardTimeLineViewController: UIViewController {
         backgroundImageView.addSubview(bluerEffectView)
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    @IBAction func logOut(sender: UIButton) {
+        PFUser.logOutInBackgroundWithBlock { (error) -> Void in
+            if error == nil {
+                print("log out success!")
+                self.userLogIn()
+            }
+            
+        }
     }
+    
     
     
     
@@ -75,5 +93,33 @@ extension PhotoCardTimeLineViewController: UICollectionViewDataSource {
         cell.card = self.cards[indexPath.row]
         
         return cell
+    }
+}
+
+extension PhotoCardTimeLineViewController: PFLogInViewControllerDelegate {
+    
+    func userLogIn() {
+        let signInController = PFSignUpViewController()
+        signInController.delegate = self
+        
+        
+        let logInController = PFLogInViewController()
+        logInController.delegate = self
+        logInController.signUpController = signInController
+        
+        self.presentViewController(logInController, animated: true, completion: nil)
+    }
+    
+    
+    func logInViewController(logInController: PFLogInViewController, didLogInUser user: PFUser) {
+        print(user)
+        logInController.dismissViewControllerAnimated(true, completion: nil)
+    }
+}
+
+
+extension PhotoCardTimeLineViewController: PFSignUpViewControllerDelegate {
+    func signUpViewController(signUpController: PFSignUpViewController, didSignUpUser user: PFUser) {
+        signUpController.dismissViewControllerAnimated(true, completion: nil)
     }
 }

@@ -7,24 +7,32 @@
 //
 
 import UIKit
+import Parse
 
-class User {
-    var id: String
-    var fullName: String
-    var email: String
-    var profileImage: UIImage!
-    var cardId = [String]()
+
+class User : PFUser {
+    
+    @NSManaged var profileImage: PFFile
+    @NSManaged var cardIds: [String]!
     
     
-    init(id: String, fullName: String, email: String, profileImage: UIImage!) {
-        self.id = id
-        self.fullName = fullName
-        self.email = email
-        self.profileImage = profileImage
+    func joinCard(cardId: String) {
+        self.cardIds.insert(cardId, atIndex: 0)
+        self.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
+            if let error = error {
+                print("\(error.localizedDescription)")
+            }
+        }
     }
     
-    class func allUsers() -> [User] {
-        return [User(id: "a1", fullName: "Nevinniy", email: "nvovap@mail.ru", profileImage: UIImage(named: "account"))]
+    override class func initialize() {
+        struct Static {
+            static var onceToken: dispatch_once_t = 0
+        }
+        
+        dispatch_once(&Static.onceToken) {
+            self.registerSubclass()
+        }
     }
     
     
