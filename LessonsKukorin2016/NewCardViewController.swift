@@ -76,15 +76,23 @@ class NewCardViewController: UIViewController {
         let newSize = CGSizeMake(ImageSize.height * ratio, ImageSize.height)
         let newRect = CGRectMake(0, 0, newSize.width, newSize.width)
         
-        UIGraphicsBeginImageContext(newSize)
+        
+       // image.resiz
+        
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
         
         image.drawInRect(newRect)
-        
         let resizedImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()
         
         UIGraphicsEndImageContext()
         
        // let resizeImage =
+        
+        //let resizedImage = image.stretchableImageWithLeftCapWidth(NSInteger(newSize.width - image.size.width), topCapHeight: NSInteger(newSize.height - image.size.height))
+        
+        
+       // let resizedImage = image.resizableImageWithCapInsets(UIEdgeInsets(top: 0, left: 0, bottom: 100  , right: 100), resizingMode: UIImageResizingMode.Stretch)
+        
         
         let imageData = UIImageJPEGRepresentation(resizedImage, 0.8)
         return PFFile(name: "image.jpg", data: imageData!)
@@ -99,6 +107,11 @@ class NewCardViewController: UIViewController {
                 let currentUser = User.currentUser()!
                 
                 currentUser.joinCard(newCard.objectId!)
+                
+                let center = NSNotificationCenter.defaultCenter()
+                let notification = NSNotification(name: "NewCardCreated", object: nil, userInfo: ["newCardObject" : newCard])
+                
+                center.postNotification(notification)
                 
             } else {
                 print("\(error?.localizedDescription)")

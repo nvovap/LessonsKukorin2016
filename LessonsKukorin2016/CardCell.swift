@@ -25,7 +25,20 @@ class CardCell: UICollectionViewCell {
     func updateUI() {
         cardTitleLabel.text = card.title
         cardDescriptionLabel.text = card.description
-        cardImagrView.image = card.cardImage
+        
+        card.cardImage.getDataInBackgroundWithBlock { (data: NSData?, error: NSError?) -> Void in
+            if let error = error {
+                print("\(error.localizedDescription)")
+            }  else {
+                if let data = data {
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        self.cardImagrView.image = UIImage(data: data)
+                    })
+                }
+            }
+            
+        }
+        
     }
     
     override func layoutSubviews() {

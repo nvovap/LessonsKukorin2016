@@ -231,8 +231,8 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="CollectionView" destination="i9N-LM-4dq" id="2CK-xq-K9f"/>
                         <outlet property="backgroundImageView" destination="S0p-9s-GgR" id="2Wd-ll-xtc"/>
+                        <outlet property="collectionView" destination="i9N-LM-4dq" id="fAP-j1-7uC"/>
                         <outlet property="currentFullnameButton" destination="hak-Ys-03C" id="Mvf-Vu-aJk"/>
                     </connections>
                 </viewController>

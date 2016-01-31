@@ -13,21 +13,75 @@ import ParseUI
 class PhotoCardTimeLineViewController: UIViewController {
     
     
-    @IBOutlet weak var CollectionView: UICollectionView!
+    @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var backgroundImageView: UIImageView!
     
     @IBOutlet weak var currentFullnameButton: UIButton!
     
     
-    private let cards = [Card]()
+    private var cards = [Card]()
 
+    
+    func fetchCards() {
+        
+        let currentUser = User.currentUser()!
+        let cardIds = currentUser.cardIds
+        
+        if cardIds.count > 0 {
+            let cardQuery = PFQuery(className: Card.parseClassName())
+            cardQuery.orderByDescending("updateAt")
+            cardQuery.whereKey("objectId", containedIn: cardIds)
+            
+            cardQuery.findObjectsInBackgroundWithBlock({ (objects : [PFObject]?, error : NSError?) -> Void in
+                if error == nil {
+                    if let cardObjects = objects {
+                        self.cards.removeAll()
+                        
+                        for cardObject in cardObjects {
+                            let card = cardObject as! Card
+                            self.cards.append(card)
+                        }
+                        
+                        self.collectionView.reloadData()
+                    }
+                } else {
+                    print("\(error!.localizedDescription)")
+                }
+                
+            })
+        }
+    }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
         if PFUser.currentUser() == nil {
             userLogIn()
+        } else {
+            fetchCards()
+            
+            let center = NSNotificationCenter.defaultCenter()
+   
+            
+            center.addObserverForName("NewCardCreated", object: nil, queue: NSOperationQueue.mainQueue(), usingBlock: { (notification : NSNotification) -> Void in
+                if let newCardObject = notification.userInfo?["newCardObject"] as? Card {
+                    if !self.cardWasDisplayed(newCardObject) {
+                        self.cards.insert(newCardObject, atIndex: 0)
+                        self.collectionView.reloadData()
+                    }
+                }
+            })
         }
+    }
+    
+    func cardWasDisplayed(newCard: Card) -> Bool {
+        for card in cards {
+            if card.objectId == newCard.objectId {
+                return true
+            }
+        }
+        
+        return false
     }
     
     override func viewDidLoad() {

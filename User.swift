@@ -17,6 +17,11 @@ class User : PFUser {
     
     
     func joinCard(cardId: String) {
+        
+        if self.cardIds == nil {
+            self.cardIds = [cardId]
+        } 
+        
         self.cardIds.insert(cardId, atIndex: 0)
         self.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
             if let error = error {
